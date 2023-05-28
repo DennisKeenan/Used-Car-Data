@@ -8,6 +8,7 @@ from sklearn.metrics import r2_score
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import make_column_transformer
 from sklearn.pipeline import make_pipeline
+from pickle import dump
 data=pd.read_csv("Used_Car.csv")
 
 
@@ -90,16 +91,30 @@ column_trans=make_column_transformer((OneHotEncoder(categories=ohe.categories_),
 lr=LinearRegression()
 pipe=make_pipeline(column_trans,lr)
 pipe.fit(X_train,Y_train)
-Y_predict=pipe.predict(X_test)
-print(r2_score(Y_test,Y_predict))
+# Y_predict=pipe.predict(X_test)
+# print(r2_score(Y_test,Y_predict))
 
     # Score
 score=[]
-for i in range(1000):
-    X_train, X_test, Y_train, Y_test=train_test_split(X,Y,test_size=0.1,random_state=i)
-    lr=LinearRegression()
-    pipe=make_pipeline(column_trans,lr)
-    pipe.fit(X_train,Y_train)
-    Y_predict=pipe.predict(X_test)
-    score.append(r2_score(Y_test,Y_predict))
-print(score[np.argmax(score)])
+# for i in range(1000):
+#     X_train, X_test, Y_train, Y_test=train_test_split(X,Y,test_size=0.1,random_state=i)
+#     lr=LinearRegression()
+#     pipe=make_pipeline(column_trans,lr)
+#     pipe.fit(X_train,Y_train)
+#     Y_predict=pipe.predict(X_test)
+#     score.append(r2_score(Y_test,Y_predict))
+# print(score[np.argmax(score)])
+
+    # Registering Car
+# car_brand=input("Please enter your car's brand: ")
+# car_name=input("Please enter your car's name: ")
+# car_year=int(input("Please enter your car's year: "))
+# car_kms_driven=int(input("Please enter your car's mileage(Km): "))
+# car_fuel_type=input("Please enter your car's fuel type: ")
+# resultprice=pipe.predict(pd.DataFrame(columns=X_test.columns,data=np.array([car_name,car_brand,car_year,car_kms_driven,car_fuel_type])
+#                                       .reshape(1,5)))
+# print("According to AI calculations, your car will cost around: ",resultprice)
+
+
+# File
+dump(pipe,open("Car Price AI","wb"))
